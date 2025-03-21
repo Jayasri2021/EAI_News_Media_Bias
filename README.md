@@ -31,7 +31,7 @@ The system emphasizes **explainability**, **accuracy**, and **responsible AI usa
 
 ---
 
-## 🔁 Project Flow
+## Project Flow
 
 1. **Start**: Input news articles from dataset  
 2. **Preprocessing**: Clean and combine title + content  
@@ -57,7 +57,20 @@ The system emphasizes **explainability**, **accuracy**, and **responsible AI usa
 - Bias mitigation (controlled rewriting) to be implemented
 
 ---
+## Citation
 
+@inproceedings{baly2020we,
+  author      = {Baly, Ramy and Da San Martino, Giovanni and Glass, James and Nakov, Preslav},
+  title       = {We Can Detect Your Bias: Predicting the Political Ideology of News Articles},
+  booktitle   = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+  series      = {EMNLP~'20},
+  NOmonth     = {November},
+  year        = {2020}
+  pages       = {4982--4991},
+  NOpublisher = {Association for Computational Linguistics}
+}
+
+---
 ## Links
 - [GitHub Repository](https://github.com/Jayasri2021/EAI_News_Media_Bias)  
 - Dataset: [Article-Bias-Prediction](https://github.com/ramybaly/Article-Bias-Prediction)
