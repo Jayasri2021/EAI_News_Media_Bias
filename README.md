@@ -24,7 +24,7 @@ The system emphasizes **explainability**, **accuracy**, and **responsible AI usa
 - **SHAP (SHapley Additive exPlanations)**  
   These tools will be used to interpret model predictions and identify bias-inducing language.
 
-### Bias Mitigation *(upcoming)*
+### Bias Mitigation 
 - **BART** – For controlled text rewriting while preserving meaning.
 - **GPT-based models** – For generating neutralized versions of biased content.
 - **Evaluation Metrics**: BERTScore, ROUGE, BLEU for semantic similarity and factual retention.
