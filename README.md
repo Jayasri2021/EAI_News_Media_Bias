@@ -1,83 +1,102 @@
+# Context-Aware Bias Detection and Controlled Text Rewriting for Fairer News Media
 
-# Context-Aware Bias Detection and Controlled Text Rewriting
+##  Project Overview
+This project proposes a transformer-based system for detecting and mitigating **political bias** in news media. The aim is to classify articles as **left**, **center**, or **right** and **rewrite biased content** into more neutral versions, while preserving the **factual integrity** of the original information.
 
-## Project Overview
-This project aims to build an AI-driven system for detecting and mitigating political bias in news media. The objective is to identify **left**, **center**, and **right** bias in articles and eventually **rewrite biased content** to make it more neutral while **preserving factual integrity**.
-
-The project is divided into two main phases:
-1. **Bias Detection** – Classifying news articles based on their political bias using transformer models.
-2. **Bias Mitigation** – Rewriting the detected biased content using controlled text generation methods.
-
-The system emphasizes **explainability**, **accuracy**, and **responsible AI usage**, especially in journalism and media.
+The methodology integrates:
+1. **Bias Detection** – Using fine-tuned transformer models (BERT).
+2. **Model Explainability** – With SHAP and LIME for transparency.
+3. **Bias Mitigation** – Using T5-based rewriting models to neutralize ideologically biased content.
 
 ---
 
-## Models Used
-### Bias Detection
-- **BERT-base-uncased**  
-  Used as the primary model for classification of news bias into three categories.
-- **RoBERTa-base** *(planned)*  
-  Will be used for performance comparison and possible model enhancement.
+##  Models Used
 
-### Explainability
-- **LIME (Local Interpretable Model-agnostic Explanations)**
-- **SHAP (SHapley Additive exPlanations)**  
-  These tools will be used to interpret model predictions and identify bias-inducing language.
+###  Bias Detection
+- **BERT-base-uncased** (fine-tuned)
+- (Attempted) **RoBERTa-base** – Dropped due to convergence issues
 
-### Bias Mitigation *(upcoming)*
-- **BART** – For controlled text rewriting while preserving meaning.
-- **GPT-based models** – For generating neutralized versions of biased content.
-- **Evaluation Metrics**: BERTScore, ROUGE, BLEU for semantic similarity and factual retention.
+###  Explainability
+- **LIME** – Interprets token-level feature importance via perturbation
+- **SHAP** – Provides global token attributions using transformer-compatible pipelines
 
----
-
-## Project Flow
-
-1. **Start**: Input news articles from dataset  
-2. **Preprocessing**: Clean and combine title + content  
-3. **Tokenization**: Use BERT tokenizer for input formatting  
-4. **Bias Detection**: Classify bias using BERT / RoBERTa  
-5. **Evaluation**: Generate classification report and confusion matrix  
-6. **Explainability**: Use SHAP & LIME to interpret model predictions  
-7. **Bias Mitigation**: Rewrite biased content with BART / GPT  
-8. **Output**: Neutralized version of original article  
-9. **Evaluation**: Use BLEU, ROUGE, BERTScore to verify neutrality
-
-
-### Datasets
-- **Old Dataset (unusable due to size)**: [News Media Bias Dataset](https://huggingface.co/datasets/newsmediabias/news-bias-full-data)  
-- **Current Dataset**: [Article-Bias-Prediction](https://github.com/ramybaly/Article-Bias-Prediction)
+###  Bias Mitigation
+- **T5-Base and T5-Large** – Trained to rewrite biased sentences into neutral ones
+- Evaluation Metrics:
+  - **ROUGE-1, ROUGE-2, ROUGE-L**
+  - **Content Preservation Score**
 
 ---
 
-## Current Status
-- Data preprocessing and BERT model training completed  
-- Achieved ~81% accuracy on bias classification  
-- RoBERTa fine-tuning and explainability integration in progress  
-- Bias mitigation (controlled rewriting) to be implemented
+##  Project Flow
+
+1. **Input**: Raw news article (title + content)
+2. **Preprocessing**: Clean, tokenize, concatenate text
+3. **Bias Detection**: Fine-tuned BERT classifies as left/center/right
+4. **Explainability**: SHAP/LIME visualize important tokens
+5. **Bias Mitigation**: T5 rewrites biased content into neutral form
+6. **Evaluation**: Metrics (ROUGE, Content Score), qualitative comparison
 
 ---
+
+##  Datasets
+
+-  **[Article-Bias-Prediction Dataset](https://github.com/ramybaly/Article-Bias-Prediction)**  
+  - 37,554 articles labeled as `left`, `center`, or `right`
+  - Used for BERT classification
+-  **[Bias-Detection-Combined Dataset](https://huggingface.co/datasets/newsmediabias/news-bias-full-data)**  
+  - ~16,000 biased-neutral sentence pairs  
+  - Used to train T5 for rewriting
+
+---
+
+##  Results Summary
+
+| Component        | Model          | Accuracy / Score |
+|------------------|----------------|------------------|
+| Bias Detection   | BERT-Base      | **92.78%** accuracy |
+| Explainability   | SHAP + LIME    | Token-level rationale aligns with ideological cues |
+| Bias Mitigation  | T5-Base        | ROUGE-1: 0.6053, Content Score: 0.6022 |
+| Bias Mitigation  | T5-Large       | More fluent, but lower ROUGE & content retention |
+
+---
+
+## Limitations & Future Work
+- T5 outputs showed limited success in altering ideological framing
+- Reclassification of rewritten text using BERT yielded minimal label changes
+- Future plans:
+  - Fine-tune T5 on politically annotated datasets
+  - Human-in-the-loop evaluation
+  - Use of larger models like T5-XL or GPT-4 for better rewriting quality
+
+---
+
+##  Paper & Code
+- Final Paper: [`News_Media_Bias_FinalPaper.pdf`](./News_Media_Bias_FinalPaper.pdf)
+- Output Files: Includes plots, visualizations, and rewritten examples
+- GitHub Repo: [EAI_News_Media_Bias](https://github.com/Jayasri2021/EAI_News_Media_Bias)
+
+---
+
 ## Citation
 
+```
+
 @inproceedings{baly2020we,
-  author      = {Baly, Ramy and Da San Martino, Giovanni and Glass, James and Nakov, Preslav},
-  title       = {We Can Detect Your Bias: Predicting the Political Ideology of News Articles},
-  booktitle   = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
-  series      = {EMNLP~'20},
-  NOmonth     = {November},
-  year        = {2020}
-  pages       = {4982--4991},
-  NOpublisher = {Association for Computational Linguistics}
+author      = {Baly, Ramy and Da San Martino, Giovanni and Glass, James and Nakov, Preslav},
+title       = {We Can Detect Your Bias: Predicting the Political Ideology of News Articles},
+booktitle   = {EMNLP 2020},
+pages       = {4982--4991},
+publisher   = {Association for Computational Linguistics},
+year        = {2020}
 }
 
----
-## Links
-- [GitHub Repository](https://github.com/Jayasri2021/EAI_News_Media_Bias)  
-- Dataset: [Article-Bias-Prediction](https://github.com/ramybaly/Article-Bias-Prediction)
+```
 
 ---
 
 ## Contributors
-- Amrutha Kollu  
-- Jayasri Suresh Vani  
-- Mohamed Aarif Mohamed Sulaiman  
+
+- **Amrutha Kollu**
+- **Jayasri Suresh Vani**
+- **Mohamed Aarif Mohamed Sulaiman**
